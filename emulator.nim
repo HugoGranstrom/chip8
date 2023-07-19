@@ -1,5 +1,5 @@
 import std/[strutils, random, times, bitops, os, strformat]
-import windy, opengl, print, sound/sound, cligen
+import windy, opengl, sound/sound, cligen
 
 const rows = 32
 const cols = 64
@@ -556,7 +556,7 @@ proc run*(emu: var Chip8Emulator, framerate = 60.0, processingRate = 1000.0, ups
     if slack > 0:
       sleep(int(slack * 1000))
 
-proc main(filename: string, fps: float = 60, rate: float = 500, upscaling: Upscaler = nearest) =
+proc emulator(filename: string, fps: float = 60, rate: float = 500, upscaling: Upscaler = nearest) =
   ## A Chip-8 emulator written in Nim.
   ## Use keys 1234 - zxcv.
   ## Press <Space> to cycle through upscaling methods.
@@ -564,4 +564,4 @@ proc main(filename: string, fps: float = 60, rate: float = 500, upscaling: Upsca
   emu.run(fps, rate, upscaling)
 
 when isMainModule:
-  dispatch main, help = {"filename": "The path to the ROM", "fps": "The graphics framerate", "rate": "The number of operations to run per second", "upscaling": "The upscaling method to use"}
+  dispatch emulator, help = {"filename": "The path to the ROM", "fps": "The graphics framerate", "rate": "The number of operations to run per second", "upscaling": "The upscaling method to use: nearest, scale2x, scale4x, scale8x, scale16x"}
